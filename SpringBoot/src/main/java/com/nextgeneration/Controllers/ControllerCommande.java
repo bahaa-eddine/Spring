@@ -1,0 +1,39 @@
+package com.nextgeneration.Controllers;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nextgeneration.Entites.Commande;
+import com.nextgeneration.Services.CommandeService;
+
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+public class ControllerCommande {
+	
+	
+	@Autowired
+    CommandeService commandeService;
+    Commande commande;
+
+    
+    @GetMapping("/commandes")
+    public Collection<Commande> coolClients() {
+    	Collection<Commande> commandes = new ArrayList<>();
+    	for(Commande c : commandeService.getAllCommande()) {
+    		commandes.add(c);
+    	}
+        return commandes;
+    }
+    
+    @GetMapping("/commande={id}")
+    public Commande getCommande(@PathVariable("id") final int id ) {
+        return commandeService.getCommandeById(id);
+    }
+
+}
